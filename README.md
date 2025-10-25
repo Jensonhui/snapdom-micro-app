@@ -36,4 +36,6 @@ server: {
 ```
 
 四、点击按钮(Click the capture button)
+
 Click the capture button, wait for the screenshot download to complete, and then check it.
+When I disable style isolation (by setting disableScopecss='true') in micro-vite-base/src/components/MicroApp.vue, the screenshot function using Snapdom works normally in the sub-application micro-vite-vue3.
