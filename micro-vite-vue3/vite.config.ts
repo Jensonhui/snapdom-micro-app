@@ -1,0 +1,31 @@
+import { fileURLToPath, URL } from 'node:url'
+
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  base: '/vite-vue3',
+  plugins: [vue()],
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url))
+    }
+  },
+
+  server: {
+    host: '0.0.0.0',
+    cors: true,
+    headers: {
+      'Access-Control-Allow-Origin': '*'
+    }
+  },
+  build: {
+    outDir: 'web-app',
+    modulePreload: {
+      resolveDependencies(filename, deps) {
+        return deps.filter((dep) => !dep.endsWith('.js'))
+      }
+    }
+  }
+})
