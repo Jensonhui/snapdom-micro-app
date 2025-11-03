@@ -21,6 +21,7 @@ export default defineConfig({
   },
   server: {
     host: '0.0.0.0',
+    allowedHosts: ['pftl6m-5174.csb.app', 'localhost', '127.0.0.1'],
     fs: {
       strict: false
     },
@@ -29,7 +30,7 @@ export default defineConfig({
     },
     proxy: {
       '/vite-vue3': {
-        target: 'http://192.168.1.21:5174/vite-vue3',
+        target: 'http://192.168.241.2:5173/vite-vue3',
         changeOrigin: true,
         ws: true,
         rewrite: (path) => path.replace(new RegExp(`^/vite-vue3`), '')

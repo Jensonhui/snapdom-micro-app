@@ -17,6 +17,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
+import { snapdom } from '@zumer/snapdom';
 const route = useRoute();
 
 const data = ref({
@@ -28,6 +29,12 @@ const url = location.origin + '/vite-vue3/';
 function handleDataChange(e: CustomEvent): void {
   console.log('from sub application data:', e.detail);
 }
+
+// Call the base mount function
+window.useSnapdom = async function (el, opts) {
+  console.log(snapdom, '----Call the base mount function---');
+  return await snapdom(el, opts);
+};
 </script>
 
 <style scoped></style>

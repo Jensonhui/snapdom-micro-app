@@ -1,7 +1,15 @@
 <template>
   <h1>Sub-application : Demo Page</h1>
+  <br />
 
-  <div class="capture-btn" @click="handleClick">capture width snapdom</div>
+  <div class="btn-box">
+    <div class="capture-btn" @click="useSnapdomInSub">
+      screenshot in the sub-app(子应用使用截图)
+    </div>
+    <div class="capture-btn the-base" @click="useSnapdomInBase">
+      screenshot in the base(基座使用截图)
+    </div>
+  </div>
 
   <div class="capture-warp" ref="captureRef">
     <h3>this is a mian title</h3>
@@ -160,15 +168,27 @@ const option = {
   ]
 }
 
-const handleClick = async () => {
+const opts = {
+  scale: 2,
+  filename: `micro-sub-app-snapdom-${Date.now()}`
+}
+
+// sub-app, is not work well;
+const useSnapdomInSub = async () => {
   if (!captureRef.value) return
 
-  const capture = await snapdom(captureRef.value as Element, {
-    scale: 2,
-    filename: `micro-sub-app-snapdom-${Date.now()}`
-  })
+  const capture = await snapdom(captureRef.value as Element, opts)
+  console.log(capture.url, '===useSnapdomInSub===')
+}
 
-  await capture.download()
+// base-app, works well;
+const useSnapdomInBase = async () => {
+  const isFn = window.rawWindow.useSnapdom
+
+  if (isFn) {
+    const capture = await isFn(captureRef.value as Element, opts)
+    console.log(capture.url, '===useSnapdomInBase===')
+  }
 }
 
 onMounted(() => {
@@ -178,8 +198,13 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.capture-btn {
-  width: 300px;
+.btn-box {
+  display: flex;
+  align-items: center;
+}
+
+.btn-box .capture-btn {
+  width: 400px;
   padding: 20px;
   color: #fff;
   text-align: center;
@@ -188,6 +213,10 @@ onMounted(() => {
   cursor: pointer;
   border-radius: 4px;
   background-color: var(--el-color-primary-dark-2);
+}
+
+.btn-box .capture-btn.the-base {
+  background-color: #2d8cf0;
 }
 
 .capture-warp {

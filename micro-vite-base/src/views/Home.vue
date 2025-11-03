@@ -51,11 +51,11 @@
 let routers = [
   {
     path: '/vite-vue3',
-    name: 'micro-application-base',
+    name: 'micro-app( the base )',
     children: [
       {
         path: '/vite-vue3/demo',
-        name: 'micro-application-sub',
+        name: 'Using Snapdom in Sub-applications',
         app: 'vite-vue3'
       }
     ]
